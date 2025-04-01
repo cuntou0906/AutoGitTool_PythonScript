@@ -64,6 +64,7 @@ def update_gitignore(repo_dir, file_path):
 
     # Check if the relative path is already in .gitignore
     if relative_path + '\n' not in lines:
+        print(f"添加文件{file_path} 到.gitignore (文件大小超过100MB)！")
         with open(gitignore_path, 'a', encoding='utf-8') as gitignore_file:
             gitignore_file.write(f"{relative_path}\n")
 
@@ -97,7 +98,6 @@ def git_add_commit_push(repo_dir, message, remote='origin', branch='master'):
             file_path = os.path.join(root, file)
             # Check file size
             if os.path.getsize(file_path) > 100 * 1024 * 1024:  # 100MB
-                print(f"添加文件{file_path} 到.gitignore (文件大小超过100MB)！")
                 update_gitignore(repo_dir, file_path)
                 # Remove the file from git tracking if it is tracked
                 # if is_tracked(file_path, repo_dir):
