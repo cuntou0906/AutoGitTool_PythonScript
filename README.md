@@ -1,5 +1,5 @@
 # AutoGitTool_PythonScript
-​    Python脚本：面向多个仓库的自动添加，提交，推送，拉取操作！
+​    Python脚本：面向多个git仓库的自动添加，提交，推送，拉取操作！
 
 ### 适用范围
 
