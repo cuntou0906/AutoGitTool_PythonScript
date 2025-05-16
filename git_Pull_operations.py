@@ -1,5 +1,6 @@
 import subprocess
 import os
+from Config_Address import local_repos, remote_urls
 
 def run_git_command(command, repo_dir):
     """Run a git command in the specified repository directory."""
@@ -55,19 +56,6 @@ def git_pull(repo_dir, remote='origin', branch='master'):
     run_git_command(f"git pull {remote} {branch}", repo_dir)
 
 if __name__ == "__main__":
-    # 注意local_repos本地仓库和远端remote_urls必须一一对应！！！否则仓库提交乱了
-    # List of local repository paths
-    local_repos = [
-        "C:\\Users\\cunto\\Desktop\\tese",
-        "C:\\Users\\cunto\\Desktop\\Repo2"
-    ]
-
-    # Corresponding list of remote repository URLs
-    remote_urls = [
-        "https://github.com/cuntou0906/tese.git",
-        "https://github.com/cuntou0906/Repo2.git"
-    ]
-
     # Ensure the lists are of the same length
     if len(local_repos) != len(remote_urls):
         print("Error: 本地存储库和远程url的数量必须匹配，且一一对应！")
