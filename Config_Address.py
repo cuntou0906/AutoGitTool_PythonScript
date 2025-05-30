@@ -12,6 +12,6 @@ local_repos = [
 # Corresponding list of remote repository URLs
 remote_urls = [
         "https://github.com/username/RemoteRepo1.git",
-        "https://github.com/username/RemoteRepo1.git",
-        "https://github.com/username/RemoteRepo1.git",
+        "https://github.com/username/RemoteRepo2.git",
+        "https://github.com/username/RemoteRepo3.git",
 ]
