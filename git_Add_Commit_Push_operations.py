@@ -96,7 +96,7 @@ class GitPush_AutoGit():
             # If the file is not tracked, return False
             return False
 
-    def git_add_commit_push(self,repo_dir, message, remote='origin', branch='master'):
+    def git_add_commit_push(self, repo_dir, message, remote='origin', branch='master'):
         """Add, commit, and push changes to the remote repository."""
         print("处理大文件：更新.gitignore！")
         # Find all files in the repo directory
@@ -148,6 +148,7 @@ class GitPush_AutoGit():
         else:
             # Iterate over each repository
             for repo_directory, remote_url in zip(self.local_repos, self.remote_urls):
+
                 print(f"\n##############################################################")
                 print(f"处理仓库: {repo_directory}")
                 # Ensure the directory exists
@@ -155,19 +156,43 @@ class GitPush_AutoGit():
                     print(f"Error: 本地仓库 {repo_directory} 不存在！")
                     self.PushRepo_ErrorNum = self.PushRepo_ErrorNum + 1
                 else:
-                    # Configure origin
-                    self.configure_origin(repo_directory, remote_url)
+                    # 检查是否是一个Git仓库，如果不是则初始化为Git仓库
+                    if not self.is_git_repo(repo_directory):
+                        print(f"{repo_directory} 不是一个Git仓库，初始化为Git仓库...")
+                        self.run_git_command("git init", repo_directory)   
+                        
+                    # 检查是否仅包含一个名为 '.git' 的文件夹，并且没有其他文件或文件夹，如果是，则认为仓库为空，不需要提交
+                    items_filedir = os.listdir(repo_directory)
+                    if len(items_filedir) == 1 and items_filedir[0] == '.git':
+                        print(f"Pass: 本地仓库 {repo_directory} 为空，不需要提交！")
+                    else:         
+                        # Configure origin
+                        self.configure_origin(repo_directory, remote_url)
 
-                    # Perform git operations
-                    Total_push_Info = self.git_add_commit_push(repo_directory, "Your commit message")
+                        # Perform git operations
+                        Total_push_Info = self.git_add_commit_push(repo_directory, "Your commit message")
 
-                    if not Total_push_Info:
-                        print(f"推送至远程仓库失败！请检查网络或远程仓库配置是否正确。")
-                        self.PushRepo_ErrorNum = self.PushRepo_ErrorNum + 1
+                        if not Total_push_Info:
+                            print(f"推送至远程仓库失败！请检查网络或远程仓库配置是否正确。")
+                            self.PushRepo_ErrorNum = self.PushRepo_ErrorNum + 1
                     
         print(f"\n##############################################################") 
         print(f"总共{len(self.local_repos)}个仓库处理完成！推送失败的仓库数量：{self.PushRepo_ErrorNum} 个。")
         print(f"##############################################################\n") 
+
+    def is_git_repo(self,folder_path):
+        try:
+            # 进入指定目录
+            result = subprocess.run(['git', 'rev-parse', '--is-inside-work-tree'], cwd=folder_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            # 如果命令执行成功，说明是一个Git仓库
+            if result.returncode == 0:
+                return True
+            else:
+                return False
+            
+        except FileNotFoundError:
+            # 如果git命令不可用，可能是因为没有安装git或者不在PATH中
+            return False  
 
 if __name__ == "__main__":
     GitPush_AutoGitObj = GitPush_AutoGit('Config_Address.json')

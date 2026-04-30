@@ -61,10 +61,24 @@ class GitPull_AutoGit(Exception):
 
 
     def git_pull(self, repo_dir, remote='origin', branch='master'):
+        print(repo_dir,remote,branch)
         """Pull changes from the remote repository."""
         print("Pulling changes...")
         return self.run_git_command(f"git pull {remote} {branch}", repo_dir)
-    
+
+    def git_clone(self, repo_dir, repo_url, branch='master'):
+        """Clone a remote repository."""
+        # print("Cloning repository...")
+        try:
+            # 使用subprocess.run执行git clone命令
+            subprocess.run(['git', 'clone', repo_url, repo_dir, '--branch', branch], check=True)
+            print(f"远程仓库已成功克隆到 {repo_dir}")
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"克隆失败: {e}")
+            self.pullRepo_ErrorNum = self.pullRepo_ErrorNum + 1
+            return
+
     def process_result(self):
 
         # 判断解析是否成功
@@ -80,15 +94,30 @@ class GitPull_AutoGit(Exception):
         else:
             # Iterate over each repository
             for repo_directory, remote_url in zip(self.local_repos, self.remote_urls):
+
                 print(f"\n##############################################################")
                 print(f"处理仓库: {repo_directory}")
                 # Ensure the directory exists
                 if not os.path.isdir(repo_directory):
-                    print(f"Error: 本地仓库 {repo_directory} 不存在！")
-                else:
+                    print(f" 本地仓库 {repo_directory} 不存在！,正在创建仓库目录...")
+                    #创建文件夹
+                    os.makedirs(repo_directory)
+                
+               # 检查是否是一个Git仓库，如果不是则初始化为Git仓库
+                if not self.is_git_repo(repo_directory):
+                    # 不是git仓库，直接克隆远程仓库到本地
                     # Configure origin
                     self.configure_origin(repo_directory, remote_url)
-                    
+                    # Perform git operations             
+                    CloneInfo = self.git_clone(repo_directory, remote_url)
+                    if not CloneInfo:
+                        print(f"从远程仓库克隆失败！请检查网络或远程仓库配置是否正确。")
+                        self.pullRepo_ErrorNum = self.pullRepo_ErrorNum + 1
+                    pass
+                else:
+                    # 以下执行的操作是为了处理已经存在的Git仓库，确保它们正确配置了远程仓库，并且能够成功拉取最新的更改。       
+                    # Configure origin
+                    self.configure_origin(repo_directory, remote_url)
                     # Perform git operations             
                     PullInfo = self.git_pull(repo_directory) 
                     if not PullInfo:
@@ -98,7 +127,20 @@ class GitPull_AutoGit(Exception):
         print(f"\n##############################################################") 
         print(f"总共{len(self.local_repos)}个仓库处理完成！拉取失败的仓库数量：{self.pullRepo_ErrorNum} 个。")
         print(f"##############################################################\n") 
-        
+
+    def is_git_repo(self,folder_path):
+        try:
+            # 进入指定目录
+            result = subprocess.run(['git', 'rev-parse', '--is-inside-work-tree'], cwd=folder_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            # 如果命令执行成功，说明是一个Git仓库
+            if result.returncode == 0:
+                return True
+            else:
+                return False
+            
+        except FileNotFoundError:
+            # 如果git命令不可用，可能是因为没有安装git或者不在PATH中
+            return False         
 
 if __name__ == "__main__":
     GitPull_AutoGitObj = GitPull_AutoGit('Config_Address.json')
