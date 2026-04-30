@@ -107,7 +107,7 @@ class GitPull_AutoGit(Exception):
                 print(f"处理仓库: {repo_directory}")
                 # Ensure the directory exists
                 if not os.path.isdir(repo_directory):
-                    print(f" 本地仓库 {repo_directory} 不存在！,正在创建仓库目录...")
+                    print(f"本地仓库 {repo_directory} 不存在！,正在创建仓库目录...")
                     #创建文件夹
                     os.makedirs(repo_directory)
                 
@@ -115,7 +115,7 @@ class GitPull_AutoGit(Exception):
                 if not self.is_git_repo(repo_directory):
                     # 不是git仓库，直接克隆远程仓库到本地
                     # Configure origin
-                    self.configure_origin(repo_directory, remote_url)
+                    # self.configure_origin(repo_directory, remote_url)
                     # Perform git operations             
                     CloneInfo = self.git_clone(repo_directory, remote_url)
                     if not CloneInfo:
