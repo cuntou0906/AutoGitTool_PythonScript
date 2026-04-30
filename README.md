@@ -7,7 +7,7 @@
 
 ### 简单上手
 
-  在`Config_Address.json配置：
+  在`Config_Address.json`配置：
 1. 设置本地仓库路径至列表`local_repos`
 
 2. 设置远程仓库URL至列表`remote_urls`
