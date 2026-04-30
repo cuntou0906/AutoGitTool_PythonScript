@@ -10,7 +10,7 @@ class GitPush_AutoGit():
         self.local_repos = []
         self.remote_urls = []
         self.PushRepo_ErrorNum = 0  # 记录推送失败的仓库数量
-        self.Addparser = RepoConfigParser(config_file_path)
+        self.Addparser = RepoConfigParser(self.config_file_path)
 
     def run_git_command(self, command, repo_dir):
         """Run a git command in the specified repository directory."""
