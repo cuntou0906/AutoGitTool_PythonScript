@@ -1,8 +1,16 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @File          : git_Add_Commit_Push_operations.py
+# @Version       : 1.0.0
+# @Description   : This File is about ...
+# @Time          : 2026/05/01 00:08
+# @Author        : cuntou0906
+# @Email         : 1084895390@qq.com
+
 import subprocess
 import os
 import json
 from Config_parse import RepoConfigParser
-
 
 class GitPush_AutoGit():
     def __init__(self, config_file_path):
