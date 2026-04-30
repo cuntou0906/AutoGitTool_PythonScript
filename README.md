@@ -12,7 +12,7 @@
 
 2. 设置远程仓库URL至列表`remote_urls`
 
-3. 项目默认采用了uv结构，在安装了uv情况下，可以直接使用uv运行git_Add_Commit_Push_operations.py实现添加、提交、推送，使用uv运行git_Pull_operations.py实现拉取，或者采用python运行。
+3. 项目默认采用了`uv`结构，在安装了`uv`情况下，可以直接使用`uv`运行`git_Add_Commit_Push_operations.py`实现添加、提交、推送，使用`uv`运行`git_Pull_operations.py`实现拉取，或者采用python运行。
 
    ```bash
    uv run git_Add_Commit_Push_operations.py
