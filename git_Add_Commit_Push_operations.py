@@ -59,7 +59,7 @@ class GitPush_AutoGit():
             print(f"配置远端URL仓库Origin为：{remote_url}...")
             self.run_git_command(f"git remote add origin {remote_url}", repo_dir)
 
-    def update_gitignore(repo_dir, file_path):
+    def update_gitignore(self,repo_dir, file_path):
         """Add a file path to .gitignore if it's not already present."""
         gitignore_path = os.path.join(repo_dir, '.gitignore')
         # Read existing .gitignore content
@@ -79,7 +79,7 @@ class GitPush_AutoGit():
             with open(gitignore_path, 'a', encoding='utf-8') as gitignore_file:
                 gitignore_file.write(f"{relative_path}\n")
 
-    def is_tracked(file_path, repo_dir):
+    def is_tracked(self, file_path, repo_dir):
         """Check if a file is tracked by git."""
         result = subprocess.run(
             f"git ls-files --error-unmatch \"{file_path}\"",
