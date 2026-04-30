@@ -61,7 +61,6 @@ class GitPull_AutoGit(Exception):
 
 
     def git_pull(self, repo_dir, remote='origin', branch='master'):
-        print(repo_dir,remote,branch)
         """Pull changes from the remote repository."""
         print("Pulling changes...")
         return self.run_git_command(f"git pull {remote} {branch}", repo_dir)
