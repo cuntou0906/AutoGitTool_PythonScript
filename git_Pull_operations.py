@@ -84,7 +84,6 @@ class GitPull_AutoGit(Exception):
             return True
         except subprocess.CalledProcessError as e:
             print(f"克隆失败: {e}")
-            self.pullRepo_ErrorNum = self.pullRepo_ErrorNum + 1
             return
 
     def process_result(self):
