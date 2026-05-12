@@ -3,8 +3,7 @@ description: |
   Propose a new feature or improvement.
   提出新功能或改进建议。
 labels:
-  - Enhancement
-  
+  - enhancement
 body:
   - type: checkboxes
     attributes:

@@ -3,8 +3,7 @@ description: |
   Report errors or unexpected behavior.
   报告错误或异常行为。
 labels:
-  - Bug
-  
+  - bug
 body:
   - type: checkboxes
     attributes:
