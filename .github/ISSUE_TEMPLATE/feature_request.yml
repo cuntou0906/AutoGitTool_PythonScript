@@ -3,37 +3,21 @@ description: |
   Propose a new feature or improvement.
   提出新功能或改进建议。
 labels:
-  - enhancement
+  - Enhancement
+  
 body:
   - type: checkboxes
     attributes:
       label: Self Checks / 自检
       options:
         - label: |
-            I have read the [FAQ](https://github.com/farion1231/cc-switch#faq) section in README.
-            我已阅读 README 中的[常见问题](https://github.com/farion1231/cc-switch#常见问题)。
+            I have read the [README.MD](https://github.com/cuntou0906/AutoGitTool_PythonScript) File.
+            我已阅读[README](https://github.com/cuntou0906/AutoGitTool_PythonScript)文件。
           required: true
         - label: |
-            I have searched for [existing issues](https://github.com/farion1231/cc-switch/issues), including closed ones.
-            我已搜索过[已有的 Issue](https://github.com/farion1231/cc-switch/issues)，包括已关闭的。
+            I have searched for [existing issues](https://github.com/cuntou0906/AutoGitTool_PythonScript/issues), including closed ones.
+            我已搜索过[已有的 Issue](https://github.com/cuntou0906/AutoGitTool_PythonScript/issues)，包括已关闭的。
           required: true
-
-  - type: dropdown
-    attributes:
-      label: Related App / 涉及应用
-      description: |
-        Which app is this feature for?
-        该功能涉及哪个应用？
-      multiple: true
-      options:
-        - Claude Code
-        - Codex
-        - Gemini CLI
-        - OpenCode
-        - OpenClaw
-        - General / 通用
-    validations:
-      required: true
 
   - type: textarea
     attributes:
